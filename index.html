@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConvertPro AI | Professional Interface</title>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --accent: #4facfe;
+            --dark: #0b0f1a;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+
+        body {
+            background: radial-gradient(circle at top right, #1e293b, #0b0f1a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* The Professional Website Card */
+        .main-interface {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        .header-section h1 { font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 800; }
+        .header-section h1 span { color: var(--primary); }
+        .header-section p { opacity: 0.6; font-size: 0.9rem; margin-bottom: 2rem; }
+
+        /* Feature Tabs */
+        .mode-tabs {
+            display: flex;
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #0b0f1a;
+        }
+
+        /* Interactive Upload Button Interface */
+        .upload-interface {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .upload-interface:hover {
+            border-color: var(--primary);
+            background: rgba(0, 242, 254, 0.03);
+        }
+
+        .icon-display { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+
+        .btn-convert {
+            width: 100%;
+            margin-top: 2rem;
+            padding: 1.2rem;
+            border-radius: 15px;
+            border: none;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #0b0f1a;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        #file-status { color: var(--primary); margin-top: 15px; font-weight: bold; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="main-interface">
+        <div class="header-section">
+            <h1>Flex<span>Convert</span></h1>
+            <p>Smart Compression & PDF Extraction</p>
+        </div>
+
+        <div class="mode-tabs">
+            <button class="tab active" onclick="updateMode('img', this)">Compress Image</button>
+            <button class="tab" onclick="updateMode('pdf', this)">PDF to Image</button>
+        </div>
+
+        <div class="upload-interface" onclick="document.getElementById('fileBox').click()">
+            <input type="file" id="fileBox" hidden onchange="showFile(this)">
+            <span class="icon-display" id="modeIcon">🖼️</span>
+            <h3 id="modeTitle">Upload Images</h3>
+            <p id="modeDesc" style="color:#64748b;">Supports PNG, JPG, WebP</p>
+            <div id="file-status"></div>
+        </div>
+
+        <button class="btn-convert">Download Optimized Files</button>
+    </div>
+
+    <script>
+        function updateMode(mode, btn) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const icon = document.getElementById('modeIcon');
+            const title = document.getElementById('modeTitle');
+            const desc = document.getElementById('modeDesc');
+
+            if(mode === 'img') {
+                icon.innerText = '🖼️';
+                title.innerText = 'Upload Images';
+                desc.innerText = 'Supports PNG, JPG, WebP';
+            } else {
+                icon.innerText = '📄';
+                title.innerText = 'Upload PDF';
+                desc.innerText = 'Convert PDF pages to Images';
+            }
+        }
+
+        function showFile(input) {
+            const status = document.getElementById('file-status');
+            if(input.files.length > 0) {
+                status.innerText = "✓ Ready: " + input.files[0].name;
+            }
+        }
+    </script>
+</body>
+</html>
