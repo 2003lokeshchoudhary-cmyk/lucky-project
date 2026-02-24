@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlexConvert | Professional Image & PDF Suite</title>
+    <title>FlexConvert | Image & PDF Suite</title>
     <style>
         :root {
             --primary: #00f2fe;
             --accent: #4facfe;
             --bg: #0b0f1a;
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --card: rgba(255, 255, 255, 0.04);
             --border: rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
 
         body {
             background-color: var(--bg);
@@ -22,52 +22,53 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
+        /* Navigation */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 10%;
             background: rgba(11, 15, 26, 0.8);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: white; }
         .logo span { color: var(--primary); }
 
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { text-decoration: none; color: #94a3b8; font-size: 0.9rem; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
-        /* --- HERO SECTION --- */
+        /* Hero Section */
         .hero {
+            padding: 100px 5% 50px;
             text-align: center;
-            padding: 80px 5% 40px;
-            background: radial-gradient(circle at center, #1e293b 0%, #0b0f1a 100%);
+            background: radial-gradient(circle at top right, #1e293b, #0b0f1a);
         }
 
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; font-weight: 900; line-height: 1.1; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; font-weight: 900; }
+        .hero h1 span { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { color: #94a3b8; font-size: 1.2rem; max-width: 600px; margin: 0 auto 3rem; }
 
-        /* --- CONVERTER CARD --- */
-        .converter-container {
-            max-width: 600px;
+        /* Interactive Tool Card */
+        .tool-wrapper {
+            max-width: 550px;
             margin: 0 auto;
-            background: var(--card-bg);
+            background: var(--card);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 32px;
             padding: 2.5rem;
+            border-radius: 30px;
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
 
         .tabs {
             display: flex;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.3);
             padding: 6px;
             border-radius: 16px;
             margin-bottom: 2rem;
@@ -75,7 +76,7 @@
 
         .tab-btn {
             flex: 1;
-            padding: 14px;
+            padding: 12px;
             border: none;
             background: transparent;
             color: #64748b;
@@ -90,169 +91,109 @@
             color: #0b0f1a;
         }
 
-        .drop-zone {
+        .upload-box {
             border: 2px dashed var(--border);
             padding: 4rem 2rem;
-            border-radius: 24px;
+            border-radius: 20px;
             cursor: pointer;
             transition: 0.3s;
+            background: rgba(255,255,255,0.01);
         }
 
-        .drop-zone:hover { border-color: var(--primary); background: rgba(0, 242, 254, 0.02); }
+        .upload-box:hover { border-color: var(--primary); background: rgba(0, 242, 254, 0.02); }
 
-        .icon-circle {
-            width: 70px;
-            height: 70px;
-            background: rgba(0, 242, 254, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-        }
+        .icon-box { font-size: 3rem; margin-bottom: 1rem; display: block; }
 
-        .btn-main {
+        .btn-convert {
             width: 100%;
             margin-top: 2rem;
             padding: 1.2rem;
-            border-radius: 16px;
+            border-radius: 15px;
             border: none;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             color: #0b0f1a;
             font-weight: 800;
-            cursor: pointer;
             font-size: 1rem;
-            box-shadow: 0 10px 20px -5px rgba(0, 242, 254, 0.3);
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(0, 242, 254, 0.4);
+            transition: 0.3s;
         }
 
-        /* --- FEATURES SECTION --- */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding: 100px 10%;
+        .btn-convert:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        /* Footer */
+        footer {
+            margin-top: 100px;
+            padding: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: #475569;
+            font-size: 0.9rem;
         }
-
-        .feat-card {
-            padding: 2rem;
-            background: rgba(255,255,255,0.02);
-            border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .feat-card h3 { margin-bottom: 1rem; color: var(--primary); }
-        .feat-card p { color: #94a3b8; font-size: 0.9rem; }
-
-        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); opacity: 0.5; font-size: 0.8rem; }
 
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">Flex<span>Convert</span></div>
+        <a href="#" class="logo">Flex<span>Convert</span></a>
         <ul class="nav-links">
-            <li><a href="#">Tools</a></li>
+            <li><a href="#">Compress</a></li>
+            <li><a href="#">PDF Tools</a></li>
             <li><a href="#">Pricing</a></li>
-            <li><a href="#">API</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <h1>Compress Smarter.<br>Convert <span>Faster.</span></h1>
-        <p>The all-in-one tool for lightning-fast image compression and PDF conversion. No quality loss, just pure optimization.</p>
+        <h1>Pro Quality. <span>Tiny Size.</span></h1>
+        <p>The fastest way to optimize images and convert PDFs without losing a single pixel of quality.</p>
 
-        <div class="converter-container">
+        <div class="tool-wrapper">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchMode('img')">Image Compressor</button>
-                <button class="tab-btn" onclick="switchMode('pdf')">PDF to Image</button>
+                <button class="tab-btn active" onclick="switchUI('img')">Compress Image</button>
+                <button class="tab-btn" onclick="switchUI('pdf')">PDF to Image</button>
             </div>
 
-            <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
-                <input type="file" id="fileInput" hidden onchange="showFileInfo(this)">
-                <div class="icon-circle" id="modeIcon">🖼️</div>
-                <h3 id="modeTitle">Select Images</h3>
-                <p id="modeDesc">Support for PNG, JPG, and WebP</p>
-                <p id="file-status" style="margin-top:15px; color:var(--primary); font-weight:bold;"></p>
+            <div class="upload-box" onclick="document.getElementById('hiddenFile').click()">
+                <input type="file" id="hiddenFile" hidden onchange="fileUpdate(this)">
+                <span class="icon-box" id="mainIcon">🖼️</span>
+                <h3 id="mainTitle">Drop your images here</h3>
+                <p id="mainDesc" style="color:#64748b; font-size: 0.9rem;">Supports JPG, PNG, WebP</p>
+                <p id="fileLabel" style="margin-top:15px; color:var(--primary); font-weight:bold;"></p>
             </div>
 
-            <button class="btn-main">Process & Download</button>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="feat-card">
-            <h3>Secure Processing</h3>
-            <p>Your files are processed locally in your browser for maximum privacy and safety.</p>
-        </div>
-        <div class="feat-card">
-            <h3>Batch Convert</h3>
-            <p>Upload multiple files at once and convert them in a single click.</p>
-        </div>
-        <div class="feat-card">
-            <h3>High Fidelity</h3>
-            <p>Our algorithms ensure that image quality remains crisp while file size drops.</p>
+            <button class="btn-convert">Start Optimization</button>
         </div>
     </section>
 
     <footer>
-        &copy; 2026 FlexConvert AI. Optimized for Vercel Deployment.
+        &copy; 2026 FlexConvert AI. Ready for Vercel Deployment.
     </footer>
 
     <script>
-        function switchMode(mode) {
+        function switchUI(mode) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
             
-            const icon = document.getElementById('modeIcon');
-            const title = document.getElementById('modeTitle');
-            const desc = document.getElementById('modeDesc');
+            const icon = document.getElementById('mainIcon');
+            const title = document.getElementById('mainTitle');
+            const desc = document.getElementById('mainDesc');
 
             if(mode === 'img') {
                 icon.innerText = '🖼️';
-                title.innerText = 'Select Images';
-                desc.innerText = 'Support for PNG, JPG, and WebP';
+                title.innerText = 'Drop your images here';
+                desc.innerText = 'Supports JPG, PNG, WebP';
             } else {
                 icon.innerText = '📄';
-                title.innerText = 'Select PDF';
-                desc.innerText = 'Convert PDF pages to high-res Images';
+                title.innerText = 'Select PDF Document';
+                desc.innerText = 'Extract pages as high-quality images';
             }
         }
 
-        function showFileInfo(input) {
-            const status = document.getElementById('file-status');
+        function fileUpdate(input) {
+            const label = document.getElementById('fileLabel');
             if(input.files.length > 0) {
-                status.innerText = "✓ " + input.files[0].name + " ready";
-            }
-        }
-    </script>
-</body>
-</html>
-        let currentMode = 'img';
-
-        function setMode(mode) {
-            currentMode = mode;
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            const icon = document.getElementById('icon-box');
-            const text = document.getElementById('upload-text');
-            
-            if(mode === 'img') {
-                icon.innerHTML = '🖼️';
-                text.innerText = 'Upload JPG, PNG or WebP';
-            } else {
-                icon.innerHTML = '📄';
-                text.innerText = 'Upload PDF to convert to Image';
-            }
-        }
-
-        function handleFile(input) {
-            const info = document.getElementById('file-info');
-            if(input.files && input.files[0]) {
-                info.style.display = 'block';
-                info.innerText = `Selected: ${input.files[0].name} (${(input.files[0].size/1024).toFixed(1)} KB)`;
+                label.innerText = "📁 " + input.files[0].name + " selected";
             }
         }
     </script>
